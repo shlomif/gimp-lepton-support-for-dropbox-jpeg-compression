@@ -77,17 +77,27 @@ gi.require_version('Gimp', '3.0')
 
 from gi.repository import Gimp  # noqa: E402
 from gi.repository import Gio  # noqa: E402
+from gi.repository import GObject  # noqa: E402
+
+fi = Gio.File.__gtype__
 
 
-def load_lep(procedure, run_mode, filename, args, data):
-    Gimp.progress_init("Opening '" + filename + "'...")
+def load_lep(procedure, run_mode, fileobj, args, data):
+    Gimp.progress_init("Opening '" + fileobj.peek_path() + "'...")
 
     try:
         tmpdirobj = mkdtemp()
         tmp_dirname = tmpdirobj
         jpeg_fn = os.path.join(tmp_dirname, "from_lep.jpeg")
-        subprocess.check_call(["lepton", filename, jpeg_fn])
-        fileImage = Gimp.file_jpeg_load(jpeg_fn, filename)
+        subprocess.check_call(["lepton", fileobj.peek_path(), jpeg_fn])
+
+        args = Gimp.ValueArray.new(2)
+        arg0 = GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE)
+        args.insert(0, arg0)
+        arg2 = GObject.Value(fi, Gio.File.new_for_path(jpeg_fn))
+        args.insert(1, arg2)
+        # jpeg_fn, fileobj.peek_path())
+        fileImage = Gimp.get_pdb().run_procedure('file-jpeg-load', args)
         if(fileImage is None):
             Gimp.message("The image could not be opened since" +
                          "it is not an image file.")
