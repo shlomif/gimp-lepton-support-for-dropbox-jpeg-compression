@@ -79,7 +79,7 @@ from gi.repository import Gimp  # noqa: E402
 from gi.repository import Gio  # noqa: E402
 from gi.repository import GObject  # noqa: E402
 
-fi = Gio.File.__gtype__
+FILE_TYPE = Gio.File.__gtype__
 
 
 def load_lep(procedure, run_mode, fileobj, args, data):
@@ -94,7 +94,7 @@ def load_lep(procedure, run_mode, fileobj, args, data):
         args = Gimp.ValueArray.new(2)
         arg0 = GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE)
         args.insert(0, arg0)
-        arg2 = GObject.Value(fi, Gio.File.new_for_path(jpeg_fn))
+        arg2 = GObject.Value(FILE_TYPE, Gio.File.new_for_path(jpeg_fn))
         args.insert(1, arg2)
         # jpeg_fn, fileobj.peek_path())
         fileImage = Gimp.get_pdb().run_procedure('file-jpeg-load', args)
