@@ -8,10 +8,10 @@ Shlomi Fish <shlomif@cpan.org>
 Introduction
 ------------
 
-These are plug-ins for [GIMP](https://www.gimp.org/) (versions 2.10.x and 2.99.x)
+These are plug-ins for https://www.gimp.org/[GIMP] (versions 2.10.x and 2.99.x)
 that provide partial
 support for opening files that were compressed using Dropbox's open source
-[compression of `*.jpeg` files called "lepton"](https://github.com/dropbox/lepton). They
+https://github.com/dropbox/lepton[compression of `*.jpeg` files called "lepton"]. They
 wrap the `lepton` executable and GIMP's native JPEG support, and are written in Python
 using the GIMP's Python API.
 
@@ -19,5 +19,5 @@ using the GIMP's Python API.
 License
 -------
 
-This code is licensed under the [GNU GPLv3-or-later](https://en.wikipedia.org/wiki/GNU_General_Public_License#Version_3),
+This code is licensed under the https://en.wikipedia.org/wiki/GNU_General_Public_License#Version_3[GNU GPLv3-or-later],
 due to the fact that parts of it were copied from the GIMP's python-based OpenRaster plugin.
