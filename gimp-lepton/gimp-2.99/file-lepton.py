@@ -67,17 +67,17 @@
 #  -- Shlomi Fish
 
 import os.path
-import subprocess
 import shutil
+import subprocess
 import sys
 from tempfile import mkdtemp
 
 import gi
 gi.require_version('Gimp', '3.0')
 
-from gi.repository import Gimp  # noqa: E402
+from gi.repository import GObject  # noqa: E402,I202
+from gi.repository import Gimp  # noqa: E402,I202
 from gi.repository import Gio  # noqa: E402
-from gi.repository import GObject  # noqa: E402
 
 FILE_TYPE = Gio.File.__gtype__
 
@@ -97,12 +97,12 @@ def load_lep(procedure, run_mode, fileobj, args, data):
         arg2 = GObject.Value(FILE_TYPE, Gio.File.new_for_path(jpeg_fn))
         args.insert(1, arg2)
         # jpeg_fn, fileobj.peek_path())
-        fileImage = Gimp.get_pdb().run_procedure('file-jpeg-load', args)
-        if(fileImage is None):
+        file_image = Gimp.get_pdb().run_procedure('file-jpeg-load', args)
+        if(file_image is None):
             Gimp.message("The image could not be opened since" +
                          "it is not an image file.")
         shutil.rmtree(tmp_dirname)
-        return fileImage
+        return file_image
     except Exception as err:
         Gimp.message("Unexpected error: " + str(err))
         raise err
